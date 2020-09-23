@@ -4,13 +4,23 @@ The Model layer is responsible for the 'business logic' part of the software.
 """
 
 import numpy as np
+import inflammation
+import os
+import inspect
 
+def get_data_dir():
+    """get default directory holding data files"""
+    return os.path.dirname(inspect.getfile(inflammation)) + '/data'
 
 def load_csv(filename):
     """Load a Numpy array from a CSV
 
-    :param filename: Filename of CSV to load
+    :param filename: Filename of CSV to load. If it is not an absolute path the
+    file is assumed to be in the default data directory
     """
+    if not os.path.isabs(filename):
+        filename = get_data_dir() + '/' + filename
+
     return np.loadtxt(fname=filename, delimiter=',')
 
 
